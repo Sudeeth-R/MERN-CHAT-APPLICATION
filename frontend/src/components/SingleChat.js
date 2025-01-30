@@ -20,6 +20,7 @@ import ScrollableChat from "./ScrollableChat";
 import io from "socket.io-client";
 import Lottie from "react-lottie";
 import animationData from "../animations/typing.json";
+import { useCallback } from "react";
 
 const ENDPOINT = "http://localhost:5000";
 var socket, selectedChatCompare;
@@ -46,7 +47,7 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
   const { selectedChat, setSelectedChat, user, notification, setNotification } =
     ChatState();
 
-  const fetchMessages = async () => {
+  const fetchMessages = useCallback(async () => {
     if (!selectedChat || !selectedChat._id) return;
     try {
       const config = {
@@ -77,7 +78,7 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
         position: "bottom",
       });
     }
-  };
+  }, [selectedChat, toast, user.token]);
 
   useEffect(() => {
     socket = io(ENDPOINT);
@@ -91,8 +92,7 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
     fetchMessages();
 
     selectedChatCompare = selectedChat;
-    // eslint-disable-next-line
-  }, [selectedChat]);
+  }, [selectedChat, fetchMessages]);
 
   useEffect(() => {
     socket.on("message received", (newMessageReceived) => {
