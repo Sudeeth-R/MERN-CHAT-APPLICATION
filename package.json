@@ -12,6 +12,8 @@
   "description": "",
   "dependencies": {
     "@chakra-ui/icons": "^2.2.4",
+    "@chakra-ui/react": "^3.5.1",
+    "@chakra-ui/utils": "^2.2.2",
     "bcrypt": "^5.1.1",
     "bcryptjs": "^2.4.3",
     "colors": "^1.4.0",
